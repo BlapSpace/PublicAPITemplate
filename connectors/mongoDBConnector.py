@@ -6,16 +6,21 @@ def connect():
     Connect to MongoDB with environment credentials
     """
     ### Connect to MongoDB ###
-    mongodbClient = pymongo.MongoClient(host=os.environ["mongoDBIP"],
-                                                                           username=os.environ["mongoDBUsername"],
-                                                                           password=os.environ["mongoDBPassword"],
-                                                                           authSource=os.environ["mongoDBAuthSource"],
-                                                                           authMechanism=os.environ["mongoDBAuthMechanism"])
+    
+    try:
+        mongoDBClient = pymongo.MongoClient(host=os.environ["mongoDBIP"],
+                                                                               username=os.environ["mongoDBUsername"],
+                                                                               password=os.environ["mongoDBPassword"],
+                                                                               authSource=os.environ["mongoDBAuthSource"],
+                                                                               authMechanism=os.environ["mongoDBAuthMechanism"])
+    except Exception as e:
+        print('[ERROR][mongoDBConnector]: Environ "get" error')
+        print(e)
     ### Connection Check Up ###
     try:
-        mongodbClient.server_info()
+        mongoDBClient.server_info()
     except Exception as e:
         print('[ERROR][mongoDBConnector]: MongoDB "connect" error')
         print(e)
         #exit()
-    return mongodbClient
+    return mongoDBClient

@@ -1,11 +1,11 @@
-import servicesStatusReport
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-import json
-import os
-import time
-import datetime
+import json, os, sys, inspect, time, datetime
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir) 
+from essentials import servicesStatusReport
 
 ### Exception Handling Class ###
 
@@ -22,10 +22,10 @@ class UnicornException(Exception):
 def init():
     try:
         ### Get Values for Status Report ###
-        timeAndDate = datetime.datetime()
+        timeAndDate = datetime.datetime.now()
         timeCount = time.time()
 
-        ### Base init ###
+        ### Base init ##timeAndDate#
         app = FastAPI()
 
         ### Error Handler load ###
@@ -52,7 +52,7 @@ def init():
                          "message": errorHandler[exc.errorCode]})
 
         ### Send Services Status Report ###
-        servicesStatusReport.send(None, "GroundInit", timeAndDate, timeCount, 0)
+        servicesStatusReport.send(None, "GroundInit", timeAndDate, time.time() - timeCount, 0)
         return app, UnicornException
     except Exception as e:
-        servicesStatusReport.send(e, "GroundInit", timeAndDate, timeCount, 4)
+        servicesStatusReport.send(e, "GroundInit", timeAndDate, time.time() - timeCount, 4)

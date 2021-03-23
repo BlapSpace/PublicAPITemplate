@@ -1,7 +1,8 @@
-from ..connectors import elasticsearchConnector, mongoDBConnector, redisConnector
-import json
-import os
-
+import json, os, sys, inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir) 
+from connectors import elasticsearchConnector, mongoDBConnector, redisConnector
 
 def send(feedback, process, timeAndDate, timeCount, statusLevel):
     ### ElasticSearch ###

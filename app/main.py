@@ -1,17 +1,20 @@
-from .. import essentials
 from fastapi.responses import JSONResponse
-import json
-import os
+import json, os, sys, inspect, time, datetime
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir) 
+from essentials import essential
+
 
 #servicesStatusReport.send() |  feedback, process, timeAndDate, timeCount, feedbackLevel
 
 ### Vars ###
 
-serviceName = os.environ()["serviceName"]
+#serviceName = os.environ()["serviceName"]
 
 ### FastAPI Init ###
 
-app, UnicornException = essential.init(serviceName)
+app, UnicornException = essential.init()
 
 ### Service Functions ###
 
