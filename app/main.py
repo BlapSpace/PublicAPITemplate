@@ -5,16 +5,16 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir) 
 from essentials import essential
 
-
-#servicesStatusReport.send() |  feedback, process, timeAndDate, timeCount, feedbackLevel
+#servicesStatusReport.send() |  databases, feedback, process, timeAndDate, timeCount, feedbackLevel
 
 ### Vars ###
 
 #serviceName = os.environ()["serviceName"]
 
-### FastAPI Init ###
+### FastAPI and Databases Init ###
 
-app, UnicornException = essential.init()
+app, UnicornException, esClient, mongoDBClient, redisClient = essential.init()
+databases = [esClient, mongoDBConnector, redisClient]
 
 ### Service Functions ###
 
