@@ -1,8 +1,7 @@
 # PublicAPITemplate
 The template for all public APIs
 
-
-
+--------------------------
 
 **API Ground Structur**
   - **essentials**
