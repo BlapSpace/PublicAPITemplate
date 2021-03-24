@@ -3,7 +3,7 @@ The template for all public APIs
 
 --------------------------
 
-**API Ground Structur**
+**API Ground Structure**
   - **essentials**
     - errorHandler.json
     - essential.py
