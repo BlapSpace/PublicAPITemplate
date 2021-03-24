@@ -17,8 +17,9 @@ def connect():
     except Exception as e:
         print('[ERROR][elasticsearchConnector]: Environ "get" error')
         print(e)
+        return False
     ### Connection Check Up ###
     if esClient.ping() != True:
         print('[ERROR][elasticsearchConnector]: ElasticSearch "connect" error')
-        #exit()
+        return False
     return esClient

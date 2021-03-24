@@ -9,12 +9,11 @@ from essentials import essential
 
 ### Vars ###
 
-#serviceName = os.environ()["serviceName"]
+#serviceName = os.environ["serviceName"]
 
 ### FastAPI and Databases Init ###
 
-app, UnicornException, esClient, mongoDBClient, redisClient = essential.init()
-databases = [esClient, mongoDBConnector, redisClient]
+app, UnicornException, databases = essential.init()
 
 ### Service Functions ###
 

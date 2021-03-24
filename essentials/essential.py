@@ -8,8 +8,15 @@ sys.path.insert(0, parent_dir)
 from essentials import servicesStatusReport
 from connectors import elasticsearchConnector, mongoDBConnector, redisConnector
 
-### Exception Handling Class ###
+### No PANIC this is only local ###
 
+serviceName = "PSearch"
+
+os.environ["serviceName"] = serviceName
+
+###
+
+### Exception Handling Class ###
 
 class UnicornException(Exception):
     def __init__(self, errorCode: str, errorContext: str, statusCode: str):
@@ -23,8 +30,8 @@ def init():
     ### Connect to Databases and return the clients at the end ###
     esClient = elasticsearchConnector.connect()
     mongoDBClient = mongoDBConnector.connect()
-    redisClient = redisConnector.connect()
-    databases = [esClient, mongoDBConnector, redisClient]
+    redisClient = redisConnector.connect(15)
+    databases = [esClient, mongoDBClient, redisClient]
     try:
         ### Get Values for Status Report ###
         timeAndDate = datetime.datetime.now()
@@ -34,9 +41,9 @@ def init():
         app = FastAPI()
 
         ### Error Handler load ###
-        with open("errorHandler.json", "r") as file:
+        with open("../essentials/errorHandler.json", "r") as file:
             errorHandler = json.load(
-                file)["services"][os.environ()["serviceName"]]
+                file)["services"][os.environ["serviceName"]]
 
         ### CORS ###
         origins = ["*"]
@@ -58,6 +65,7 @@ def init():
 
         ### Send Services Status Report ###
         servicesStatusReport.send(databases, None, "GroundInit", timeAndDate, time.time() - timeCount, 0)
-        return app, UnicornException, esClient, mongoDBClient, redisClient
+        return app, UnicornException, databases
     except Exception as e:
         servicesStatusReport.send(databases, e, "GroundInit", timeAndDate, time.time() - timeCount, 4)
+        print(e)

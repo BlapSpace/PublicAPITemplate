@@ -15,7 +15,7 @@ def connect():
     except Exception as e:
         print('[ERROR][neo4jConnector]: Environ "get" error')
         print(e)
-        #exit()
+        return False
     ### Connection Check Up ###
     #ToDo: Self Check
     #ToDo: If error => Print it

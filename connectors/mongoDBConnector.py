@@ -16,11 +16,12 @@ def connect():
     except Exception as e:
         print('[ERROR][mongoDBConnector]: Environ "get" error')
         print(e)
+        return False
     ### Connection Check Up ###
     try:
         mongoDBClient.server_info()
     except Exception as e:
         print('[ERROR][mongoDBConnector]: MongoDB "connect" error')
         print(e)
-        #exit()
+        return False
     return mongoDBClient
